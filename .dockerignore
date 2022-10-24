@@ -1,0 +1,10 @@
+*
+!src/
+!database/
+!package.json
+!package-lock.json
+!yarn.lock
+!ormconfig.js
+!tsconfig.json
+!genSchema.ts
+!tsconfig.build.json
