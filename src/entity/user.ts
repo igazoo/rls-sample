@@ -9,7 +9,6 @@ export class User {
 	id!: string;
 
 	@Column("uuid", { name: "tenant_id" })
-	@Field()
 	tenantId!: string;
 
 	@Column()
