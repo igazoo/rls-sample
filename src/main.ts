@@ -1,13 +1,27 @@
-import express, { NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
+import "reflect-metadata";
+
+import { UserResolver } from "./presentation/resolver/userResolver";
+import express from "express";
+
+import { buildSchema } from "type-graphql";
+import { createConnection } from "typeorm";
+import { GraphQLSchema } from "graphql";
+import { ApolloServer } from "apollo-server-express";
 
 const app = express();
-dotenv.config(); //Reads .env file and makes it accessible via process.env
+const serve = async () => {
+	await createConnection();
 
-app.get("/test", (req: Request, res: Response) => {
-	res.send("hi");
-});
+	const schema = await buildSchema({
+		resolvers: [UserResolver],
+	});
+	const server = new ApolloServer({ schema });
 
-app.listen(process.env.PORT, () => {
-	console.log(`Server is running at ${process.env.PORT}`);
-});
+	server.applyMiddleware({ app, path: "/graphql" });
+
+	app.listen({ port: process.env.PORT });
+};
+
+serve()
+	.then(() => console.debug(`Ready ${process.env.PORT}`))
+	.catch(console.error);
