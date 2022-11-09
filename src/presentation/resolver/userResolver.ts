@@ -7,11 +7,10 @@ import { UserService } from "../../service/userService";
 
 @Resolver()
 export class UserResolver {
-	private repo = getCustomRepository(UserRepository);
-
 	@Query(() => User)
 	async findOneUser(@Arg("id") id: string): Promise<User | undefined> {
-		return await this.repo.findOne({ id });
+		const service = new UserService();
+		return await service.findOneById(id);
 	}
 
 	@Mutation(() => User)

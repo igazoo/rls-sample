@@ -12,4 +12,12 @@ export class UserService {
 
 		return await this.repo.save(entity);
 	}
+
+	async findOneById(id: string): Promise<User | undefined> {
+		const result = await this.repo.findOneById(id);
+
+		if (!result) throw new Error("not found users");
+
+		return result;
+	}
 }
