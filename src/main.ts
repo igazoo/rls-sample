@@ -15,7 +15,9 @@ const serve = async () => {
 	const schema = await buildSchema({
 		resolvers: [UserResolver, PetResolver],
 	});
-	const server = new ApolloServer({ schema });
+	const server = new ApolloServer({
+		schema,
+	});
 
 	server.applyMiddleware({ app, path: "/graphql" });
 
